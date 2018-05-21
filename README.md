@@ -4,7 +4,7 @@ Simple observable data structure
 
 ## Introduction
 
-Tinysignals are like regular variables that allow you to subscribe to changes on them. They provide a simple, lightweight alternative to more complex observerables or event listeners.
+Tinysignals are like regular variables that allow you to subscribe to changes on them. They provide a simple, lightweight alternative to more complex observables or event listeners.
 
 ## Signal types
 
