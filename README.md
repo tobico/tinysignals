@@ -8,6 +8,18 @@ Simple observable data structure
 
 Tinysignals are like regular variables that allow you to subscribe to changes on them. They provide a simple, lightweight alternative to more complex observables or event listeners.
 
+### Installation
+
+With Yarn:
+```sh
+yarn add tinysignals
+```
+
+Using NPM:
+```sh
+npm install --save tinysignals
+```
+
 ## Signal types
 
 ### Signal
