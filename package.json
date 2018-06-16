@@ -3,7 +3,7 @@
   "version": "1.0.2",
   "description": "Simple observable data structure",
   "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "types": "dist/index.d.ts",
   "repository": "https://github.com/tobico/tinysignals",
   "license": "MIT",
   "keywords": [],
