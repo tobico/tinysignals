@@ -1,8 +1,10 @@
-import { test } from 'ava';
-import { PromiseSignal } from '..';
+import { PromiseSignal } from './promise-signal';
 
-test('pending', t => {
-  const promise = new Promise(() => null);
-  const signal = new PromiseSignal(promise);
-  t.deepEqual(signal.get(), { status: 'pending' });
+describe('PromiseSignal', () => {
+  it('pending', () => {
+    const promise = { then: () => promise, catch: () => promise } as any;
+    const signal = new PromiseSignal(promise);
+
+    expect(signal.get().status).toEqual('pending');
+  });
 });

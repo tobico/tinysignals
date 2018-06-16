@@ -8,35 +8,27 @@
   "license": "MIT",
   "keywords": [],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "rm -rf dist && tsc -p tsconfig.json",
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:tslint": "tslint --fix --project .",
     "test": "run-s build test:*",
     "test:lint": "tslint --project . && prettier \"src/**/*.ts\" --list-different",
-    "test:unit": "ava"
+    "test:unit": "jasmine --config=jasmine.json"
   },
   "engines": {
     "node": ">=8.9"
   },
   "dependencies": {},
   "devDependencies": {
-    "ava": "^1.0.0-beta.3",
+    "@types/jasmine": "^2.8.8",
+    "jasmine": "^3.1.0",
     "npm-run-all": "^4.1.2",
     "prettier": "^1.10.2",
     "tslint": "^5.4.3",
     "tslint-config-prettier": "^1.8.0",
     "tslint-immutable": "^4.5.1",
     "typescript": "^2.4.1"
-  },
-  "ava": {
-    "failFast": true,
-    "files": [
-      "dist/**/*.spec.js"
-    ],
-    "sources": [
-      "dist/**/*.js"
-    ]
   },
   "prettier": {
     "singleQuote": true

@@ -1,4 +1,3 @@
-import { test } from 'ava';
 import {
   createList,
   disposeList,
@@ -16,39 +15,41 @@ const makeThreeItemList = () => {
   return [list1, list2, list3];
 };
 
-test('createList', t => {
-  const list = createList('test');
-  t.is(list.value, 'test');
-});
+describe('LinkedList', () => {
+  it('createList', () => {
+    const list = createList('test');
+    expect(list.value).toEqual('test');
+  });
 
-test('insertItemAfter', t => {
-  const list = createList(1);
-  insertItemAfter(list, createList(2));
-  t.is(list.next!.value, 2);
-  t.is(list.next!.prev, list);
-});
+  it('insertItemAfter', () => {
+    const list = createList(1);
+    insertItemAfter(list, createList(2));
+    expect(list.next!.value).toEqual(2);
+    expect(list.next!.prev).toEqual(list);
+  });
 
-test('removeItem', t => {
-  const [list1, list2, list3] = makeThreeItemList();
-  removeItem(list2);
-  t.is(list1.next, list3);
-  t.is(list3.prev, list1);
-});
+  it('removeItem', () => {
+    const [list1, list2, list3] = makeThreeItemList();
+    removeItem(list2);
+    expect(list1.next).toEqual(list3);
+    expect(list3.prev).toEqual(list1);
+  });
 
-test('forEachItem', t => {
-  const [list1, ,] = makeThreeItemList();
-  let sum = 0;
-  forEachItem(list1, x => (sum += x));
-  t.is(sum, 6);
-});
+  it('forEachItem', () => {
+    const [list1, ,] = makeThreeItemList();
+    let sum = 0;
+    forEachItem(list1, x => (sum += x));
+    expect(sum).toEqual(6);
+  });
 
-test('disposeList', t => {
-  const [list1, list2, list3] = makeThreeItemList();
-  disposeList(list1);
-  t.is(list1.next, undefined);
-  t.is(list1.prev, undefined);
-  t.is(list2.next, undefined);
-  t.is(list2.prev, undefined);
-  t.is(list3.next, undefined);
-  t.is(list3.prev, undefined);
+  it('disposeList', () => {
+    const [list1, list2, list3] = makeThreeItemList();
+    disposeList(list1);
+    expect(list1.next).toBe(undefined);
+    expect(list1.prev).toBe(undefined);
+    expect(list2.next).toBe(undefined);
+    expect(list2.prev).toBe(undefined);
+    expect(list3.next).toBe(undefined);
+    expect(list3.prev).toBe(undefined);
+  });
 });
