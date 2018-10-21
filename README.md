@@ -35,6 +35,18 @@ signal.set(2) // console logs 2
 signal.set(signal.get() + 1) // console logs 3
 ```
 
+#### Signal methods
+
+* `constructor(initial: Type)` creates a new signal with the given initial value
+* `get(): Type` returns the current value of the signal
+* `set(value: Type): void` sets a new value, and notifies any observers
+* `follow(callback: (type: Type) => void, runNow: boolean = false): () => void`
+  adds a new observer callback that will be notified when the signal value
+  changes. If the optional `runNow` parameter is true, the callback will be
+  fired immediately with the current value of the signal. The return value is an
+  unfollow function that can be called to remove the observer
+* `dispose()` removes all observers
+
 ### MappedSignal
 
 MappedSignal allows you to created a new signal that "maps" an existing signal through a function, updating the result of the function when the mapped signal changes.
@@ -77,3 +89,26 @@ signal.get() // returns { status: 'pending' }
 signal.follow(value => console.log(value))
 // when promise resolves, console logs { status: 'resolved', value: 'someValue' }
 ```
+
+## Event type
+
+Event lets you define a simple observable event without the value storage
+provided by a Signal.
+
+```js
+import { Event } from 'tinysignals'
+
+const event = new Event()
+event.follow((name) => console.log(`Hello ${name}`))
+event.call('World') // console logs "Hello World"
+```
+
+#### Event methods
+
+* `constructor()` creates a new event
+* `call(...args: CallbackArgs)` calls all observer callbacks with the arguments
+  provided
+* `follow(callback: (...CallbackArgs) => void): () => void`
+  adds a new callback that will be run when the event fires. The return value
+  is an unfollow function that can be called to remove the callback
+* `dispose()` removes all callbacks

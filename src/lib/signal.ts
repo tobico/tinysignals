@@ -1,26 +1,18 @@
-import {
-  createList,
-  disposeList,
-  forEachItem,
-  insertItemAfter,
-  LinkedList,
-  removeItem
-} from './linked-list';
-
-export type SignalCallback<Type> = (value: Type) => void;
+import { Event } from './event';
 
 export class Signal<Type> {
   private latest: Type;
-  private listeners?: LinkedList<SignalCallback<Type>>;
+  private event: Event<[Type]>;
 
   constructor(initial: Type) {
     this.latest = initial;
+    this.event = new Event();
   }
 
   public set(value: Type): void {
     if (value !== this.latest) {
       this.latest = value;
-      forEachItem(this.listeners, callback => callback(value));
+      this.event.call(value);
     }
   }
 
@@ -28,26 +20,17 @@ export class Signal<Type> {
     return this.latest;
   }
 
-  public follow(callback: SignalCallback<Type>): () => void {
-    const item = createList(callback);
-    if (this.listeners === undefined) {
-      this.listeners = item;
-    } else {
-      insertItemAfter(this.listeners, item);
+  public follow(
+    callback: (type: Type) => void,
+    runNow: boolean = false
+  ): () => void {
+    if (runNow) {
+      callback(this.latest);
     }
-    callback(this.latest);
-
-    return () => {
-      if (item === this.listeners) {
-        this.listeners = this.listeners.next;
-      } else {
-        removeItem(item);
-      }
-    };
+    return this.event.follow(callback);
   }
 
   public dispose(): void {
-    disposeList(this.listeners);
-    delete this.listeners;
+    this.event.dispose();
   }
 }

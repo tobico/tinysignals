@@ -22,6 +22,24 @@ describe('Signal', () => {
     expect(v).toEqual(80);
   });
 
+  it('follow without runNow', () => {
+    const signal = new Signal(5);
+    let v = 10;
+    signal.follow(value => {
+      v = value;
+    });
+    expect(v).toEqual(10);
+  });
+
+  it('follow with runNow', () => {
+    const signal = new Signal(5);
+    let v;
+    signal.follow(value => {
+      v = value;
+    }, true);
+    expect(v).toEqual(5);
+  });
+
   it('follow and unfollow', () => {
     const signal = new Signal(5);
     let v;
