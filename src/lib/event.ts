@@ -8,13 +8,13 @@ import {
 } from './linked-list';
 
 export class Event<CallbackArgs extends any[]> {
-  private listeners?: LinkedList<(...CallbackArgs) => void>;
+  private listeners?: LinkedList<(...args: CallbackArgs) => void>;
 
   public call(...args: CallbackArgs): void {
     forEachItem(this.listeners, callback => callback(...args));
   }
 
-  public follow(callback: (...CallbackArgs) => void): () => void {
+  public follow(callback: (...args: CallbackArgs) => void): () => void {
     const item = createList(callback);
     if (this.listeners === undefined) {
       this.listeners = item;
